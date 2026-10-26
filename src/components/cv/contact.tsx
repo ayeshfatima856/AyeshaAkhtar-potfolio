@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, CheckCircle2, AlertCircle, Loader2, Mail } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle, Loader2, Mail, Phone } from "lucide-react";
 import { Reveal, SectionHead, useProfile } from "./shared";
 
 const SERVICE_OPTIONS = [
@@ -14,6 +14,7 @@ const SERVICE_OPTIONS = [
 
 export function Contact() {
   const profile = useProfile();
+  const phones = [profile.phone1, profile.phone2].filter((p): p is string => !!p && p.trim() !== "");
   const [form, setForm] = useState({ name: "", email: "", service: SERVICE_OPTIONS[0], message: "" });
   const [state, setState] = useState<"idle" | "busy" | "sent" | "error">("idle");
   const [error, setError] = useState("");
@@ -100,6 +101,31 @@ export function Contact() {
                     </p>
                   </div>
                 </li>
+                {phones.length > 0 && (
+                  <li className="flex items-start gap-3.5 rounded-2xl border border-ink/8 bg-cloud p-4.5">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-iris/10 text-iris">
+                      <Phone className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <div>
+                      <p className="text-[13.5px] font-bold text-ink">Prefer to call?</p>
+                      <p className="mt-0.5 text-[13px] leading-relaxed text-slateink">
+                        Call me directly on{" "}
+                        {phones.map((p, i) => (
+                          <span key={p}>
+                            {i > 0 && (i === phones.length - 1 ? " or " : ", ")}
+                            <a
+                              href={`tel:${p}`}
+                              className="font-semibold text-ink underline decoration-iris/40 decoration-2 underline-offset-4 transition hover:text-iris"
+                            >
+                              {p}
+                            </a>
+                          </span>
+                        ))}
+                        .
+                      </p>
+                    </div>
+                  </li>
+                )}
               </ul>
             </Reveal>
           </div>

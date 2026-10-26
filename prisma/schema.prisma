@@ -110,6 +110,8 @@ model Profile {
   photoUrl     String?
   email        String?
   whatsapp     String?
+  phone1       String?
+  phone2       String?
   location     String?
   facebook     String?
   instagram    String?

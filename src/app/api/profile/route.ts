@@ -18,7 +18,7 @@ export async function PUT(req: NextRequest) {
   const data: Record<string, unknown> = {};
   const strFields = [
     "name", "title", "tagline", "heroHeadline", "heroSub", "bio", "approach",
-    "philosophy", "photoUrl", "email", "whatsapp", "location", "facebook",
+    "philosophy", "photoUrl", "email", "whatsapp", "phone1", "phone2", "location", "facebook",
     "instagram", "linkedin", "behance", "services",
   ] as const;
   for (const f of strFields) if (b[f] !== undefined) data[f] = String(b[f]);

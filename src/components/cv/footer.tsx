@@ -1,6 +1,6 @@
 "use client";
 
-import { Facebook, Instagram, Linkedin, Dribbble, ArrowUp } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Dribbble, ArrowUp, Phone } from "lucide-react";
 import { Link } from "@/lib/router";
 import { useProfile } from "./shared";
 
@@ -15,6 +15,7 @@ const NAV = [
 export function Footer() {
   const profile = useProfile();
   const year = new Date().getFullYear();
+  const phones = [profile.phone1, profile.phone2].filter((p): p is string => !!p && p.trim() !== "");
 
   const socials = [
     { href: profile.facebook, label: "Facebook", Icon: Facebook },
@@ -35,6 +36,23 @@ export function Footer() {
             <p className="mt-2 max-w-sm text-[13.5px] leading-relaxed text-mist">
               {profile.tagline}
             </p>
+            {phones.length > 0 && (
+              <ul className="mt-4 space-y-1.5">
+                {phones.map((p) => (
+                  <li key={p}>
+                    <a
+                      href={`tel:${p}`}
+                      className="inline-flex items-center gap-2 text-[13.5px] font-semibold text-white/90 transition hover:text-lime-pop"
+                    >
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-lime-pop/15">
+                        <Phone className="h-3 w-3 text-lime-pop" aria-hidden="true" />
+                      </span>
+                      {p}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
             {socials.length > 0 && (
               <ul className="mt-5 flex gap-2.5">
                 {socials.map(({ href, label, Icon }) => (

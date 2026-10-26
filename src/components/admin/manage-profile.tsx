@@ -10,7 +10,7 @@ import { Loader2, Save, UserRound } from "lucide-react";
 interface ProfileRow {
   name: string; title: string; tagline: string; heroHeadline: string; heroSub: string;
   bio: string; approach: string; philosophy: string; photoUrl: string | null;
-  email: string | null; whatsapp: string | null; location: string | null;
+  email: string | null; whatsapp: string | null; phone1: string | null; phone2: string | null; location: string | null;
   facebook: string | null; instagram: string | null; linkedin: string | null; behance: string | null;
 }
 
@@ -124,6 +124,12 @@ export default function ManageProfile() {
               </AdminField>
               <AdminField label="WhatsApp">
                 <input className={inputCls} value={draft.whatsapp || ""} onChange={(e) => set("whatsapp", e.target.value)} placeholder="+92 …" />
+              </AdminField>
+              <AdminField label="Phone number 1">
+                <input className={inputCls} value={draft.phone1 || ""} onChange={(e) => set("phone1", e.target.value)} placeholder="e.g. 96871756645" />
+              </AdminField>
+              <AdminField label="Phone number 2">
+                <input className={inputCls} value={draft.phone2 || ""} onChange={(e) => set("phone2", e.target.value)} placeholder="e.g. 03157982508" />
               </AdminField>
               <AdminField label="Facebook">
                 <input className={inputCls} value={draft.facebook || ""} onChange={(e) => set("facebook", e.target.value)} placeholder="https://facebook.com/…" />

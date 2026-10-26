@@ -51,6 +51,8 @@ export interface ProfileData {
   photoUrl?: string | null;
   email?: string | null;
   whatsapp?: string | null;
+  phone1?: string | null;
+  phone2?: string | null;
   location?: string | null;
   facebook?: string | null;
   instagram?: string | null;
@@ -73,6 +75,8 @@ export const DEFAULT_PROFILE: ProfileData = {
   philosophy:
     "Good design isn't decoration — it's communication. A post should stop the scroll, a campaign should tell one clear story, and a website should make the next step obvious. I keep things honest, clean and conversion-focused.",
   photoUrl: "/images/site/ayesha-portrait.png",
+  phone1: "96871756645",
+  phone2: "03157982508",
 };
 
 /* ---------------- services (owner-specified) ---------------- */

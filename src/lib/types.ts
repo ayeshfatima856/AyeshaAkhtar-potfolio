@@ -80,6 +80,8 @@ export type Profile = {
   photoUrl?: string | null;
   email?: string | null;
   whatsapp?: string | null;
+  phone1?: string | null;
+  phone2?: string | null;
   location?: string | null;
   facebook?: string | null;
   instagram?: string | null;
