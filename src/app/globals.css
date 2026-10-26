@@ -499,6 +499,25 @@
   .page-fade { animation: none; }
 }
 
+/* mobile nav menu panel + tap-away backdrop */
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+.menu-panel {
+  animation: menu-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes menu-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.menu-backdrop {
+  animation: menu-backdrop-in 0.25s ease both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel, .menu-backdrop { animation: none; }
+}
+
 /* portrait frame */
 .portrait-ring {
   position: relative;

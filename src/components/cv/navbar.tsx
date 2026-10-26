@@ -32,7 +32,26 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // close the mobile menu when any nav link is clicked
+  /* any navigation — hash change from ANY link on ANY part of the page — closes the mobile menu */
+  useEffect(() => {
+    setOpen(false);
+  }, [route]);
+
+  /* while the mobile menu is open: lock the page behind it and close on Escape */
+  useEffect(() => {
+    if (!open) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   const closeMenu = (e: MouseEvent<HTMLAnchorElement>) => setOpen(false);
   const linkProps = { onClick: closeMenu };
 
@@ -45,6 +64,7 @@ export function Navbar() {
       <nav className="mx-auto flex h-[76px] max-w-7xl items-center justify-between px-5 lg:px-8" aria-label="Main navigation">
         <Link
           to="/"
+          {...linkProps}
           className="group flex items-center gap-2.5"
           aria-label={`${profile.name} — home`}
         >
@@ -83,7 +103,7 @@ export function Navbar() {
         </div>
 
         <button
-          className="rounded-lg p-2 text-white transition hover:bg-white/10 lg:hidden"
+          className="rounded-lg p-2 text-white transition hover:bg-white/10 active:scale-90 lg:hidden"
           onClick={() => setOpen(!open)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
@@ -93,27 +113,39 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div className="border-t border-white/8 bg-ink/97 backdrop-blur-xl lg:hidden">
-          <ul className="space-y-1 px-5 py-4">
-            {LINKS.map((l) => (
-              <li key={l.to}>
-                <Link
-                  to={l.to}
-                  className={`block w-full rounded-xl px-4 py-3 text-left text-[15px] font-medium transition ${
-                    isActive(route, l.to) ? "bg-white/10 text-white" : "text-mist hover:bg-white/6 hover:text-white"
-                  }`}
-                >
-                  {l.label}
+        <>
+          {/* tap anywhere outside the menu to close it */}
+          <button
+            type="button"
+            aria-label="Close menu"
+            tabIndex={-1}
+            onClick={() => setOpen(false)}
+            className="menu-backdrop fixed inset-0 z-[-1] bg-ink/50 backdrop-blur-sm lg:hidden"
+          />
+          <div className="menu-panel border-t border-white/8 bg-ink/97 backdrop-blur-xl lg:hidden">
+            <ul className="space-y-1 px-5 py-4">
+              {LINKS.map((l) => (
+                <li key={l.to}>
+                  <Link
+                    to={l.to}
+                    {...linkProps}
+                    aria-current={isActive(route, l.to) ? "page" : undefined}
+                    className={`block w-full rounded-xl px-4 py-3 text-left text-[15px] font-medium transition active:bg-white/15 ${
+                      isActive(route, l.to) ? "bg-white/10 text-white" : "text-mist hover:bg-white/6 hover:text-white"
+                    }`}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+              <li className="pt-2">
+                <Link to="/contact" {...linkProps} className="btn-iris w-full px-5 py-3 text-sm">
+                  Let&apos;s Work Together <ArrowRight className="h-4 w-4" />
                 </Link>
               </li>
-            ))}
-            <li className="pt-2">
-              <Link to="/contact" {...linkProps} className="btn-iris w-full px-5 py-3 text-sm">
-                Let&apos;s Work Together <ArrowRight className="h-4 w-4" />
-              </Link>
-            </li>
-          </ul>
-        </div>
+            </ul>
+          </div>
+        </>
       )}
     </header>
   );
