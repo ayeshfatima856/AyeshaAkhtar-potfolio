@@ -1,0 +1,15 @@
+# Netlify deployment for the Ayesha Akhtar portfolio (Next.js + Prisma/SQLite)
+[build]
+  command = "npx prisma generate && npx next build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Bundle the pre-seeded SQLite database into every serverless function.
+# src/lib/db.ts copies it to /tmp at runtime (Netlify's FS is read-only).
+[functions]
+  included_files = ["db/custom.db"]
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

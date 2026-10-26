@@ -1,0 +1,178 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String @unique
+  slug  String @unique
+  kind  String // "web" | "marketing" | "design"
+  color String @default("#8B5CF6")
+  sort  Int    @default(0)
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  category    String
+  track       String // "web" | "marketing" | "design"
+  kind        String   @default("website") // "website" | "social" | "campaign"
+  tagline     String
+  description String
+  overview    String?
+  tools       String @default("")
+  results     String? // JSON [{label, value, hint}]
+  metrics     String? // JSON [{label, value, suffix}]
+  challenge   String?
+  solution    String?
+  role        String   @default("") // editable role label e.g. "Website Design", "Portfolio Showcase"
+  objectives  String? // design objectives (case study)
+  creativeDirection String? // creative direction (case study)
+  image       String
+  gallery     String? // JSON [url]
+  liveUrl     String? // live website URL for real client projects
+  socialUrl   String? // social page (Facebook/Instagram) URL
+  showcase    Boolean  @default(false) // part of the dedicated Website Showcase grid
+  industry    String?  // industry group for the auto-organized showcase
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+  demo        Boolean  @default(true)
+  sort        Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Brand {
+  id             String   @id @default(cuid())
+  name           String
+  industry       String
+  logoUrl        String?
+  description    String   @default("")
+  facebookUrl    String?
+  instagramUrl   String?
+  websiteUrl     String?
+  images         String   @default("[]") // JSON url[]
+  layout         String   @default("profile") // "banner" | "profile" | "collage" | "mockup"
+  accent         String   @default("#5B5CF0") // brand-inspired accent color
+  isOwnBrand     Boolean  @default(false)
+  featured       Boolean  @default(false)
+  showInSocial   Boolean  @default(true)
+  showInWebsites Boolean  @default(false)
+  role           String   @default("")
+  scope          String   @default("") // e.g. "Social Media Management" | "Website Design & Management"
+  objectives     String?  // case study objectives
+  creativeDirection String? // case study creative direction
+  sort           Int      @default(0)
+  published      Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model GalleryItem {
+  id        String   @id @default(cuid())
+  title     String   @default("")
+  category  String   @default("Other Creative Work")
+  imageUrl  String
+  caption   String?
+  isSample  Boolean  @default(false)
+  projectId String?
+  brandId   String?
+  sort      Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id           String   @id @default(cuid())
+  name         String   @default("Ayesha Akhtar")
+  title        String   @default("Graphic Designer · Social Media Manager · Digital Marketer · Website Designer")
+  tagline      String   @default("")
+  heroHeadline String   @default("Creative Designs. Powerful Brands. Digital Experiences That Convert.")
+  heroSub      String   @default("I help businesses build stronger digital identities through eye-catching graphics, strategic social media management, performance-focused marketing creatives, and modern website experiences.")
+  bio          String   @default("")
+  approach     String   @default("")
+  philosophy   String   @default("")
+  photoUrl     String?
+  email        String?
+  whatsapp     String?
+  location     String?
+  facebook     String?
+  instagram    String?
+  linkedin     String?
+  behance      String?
+  services     String   @default("[]") // JSON [{title, blurb}]
+  updatedAt    DateTime @updatedAt
+}
+
+model BlogPost {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  excerpt   String
+  content   String
+  cover     String?
+  tags      String   @default("")
+  readTime  Int      @default(5)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  company   String?
+  quote     String
+  rating    Int      @default(5)
+  initials  String?
+  isDemo    Boolean  @default(true)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model ServicePackage {
+  id          String  @id @default(cuid())
+  name        String
+  tier        String
+  kind        String // "web" | "marketing" | "bundle"
+  price       String
+  period      String?
+  tagline     String?
+  features    String  @default("[]") // JSON string[]
+  highlighted Boolean @default(false)
+  active      Boolean @default(true)
+  sort        Int     @default(0)
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  service   String?
+  budget    String?
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  key   String @id
+  value String
+}
