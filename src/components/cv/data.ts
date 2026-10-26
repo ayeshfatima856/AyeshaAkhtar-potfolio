@@ -493,6 +493,21 @@ export const MARKETING_SHOTS: ResultShot[] = [
     label: "Google Ads — ads & extensions overview (Nov 2018 – Jul 2020)",
     meta: "8.12K clicks · 403K impressions · €0.18 avg. CPC · €1.44K cost",
   },
+  {
+    src: "/images/cv/meta-leadgen-master.png",
+    label: "Meta Ads — Lead Gen Master Account (Feb 1 – May 31, 2025)",
+    meta: "8,475 Facebook leads · $1.74 avg. cost per lead · $15,115.91 spend · 81.44% quality lead rate · 26.24% conversion rate · $421,100 est. leads value · 27.86 est. ROAS · 8 campaigns",
+  },
+  {
+    src: "/images/cv/meta-purchases-oct.png",
+    label: "Meta Ads — website purchase campaigns (columns: 15 Oct)",
+    meta: "102 purchases · $2.09 avg. cost per purchase · $209.82 total spend · 107,751 reach · 164,247 impressions · 10 ongoing campaigns",
+  },
+  {
+    src: "/images/cv/store-daily-sales.png",
+    label: "Store dashboard — daily sales performance",
+    meta: "$12,188.34 sales in one day (+71%) · 263 orders (+79%) · 3.28% conversion rate (+31%) · 114 visitors",
+  },
 ];
 
 export const RESULT_STATS = [
